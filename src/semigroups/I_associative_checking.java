@@ -1,7 +1,7 @@
 package semigroups;
 
 public class I_associative_checking {
-	
+	// This is a test
 	public static void main(String[] args) {
 	// Manually enter the semigroups table
 	int[][] ms_ex1 = {{1,2,3},{2,1,2},{3,2,1}};
