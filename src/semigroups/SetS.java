@@ -2,8 +2,8 @@ package semigroups;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.StringTokenizer;
 import java.io.IOException;
+import java.util.StringTokenizer;
 
 /**
  * A class to represent a set of integers, where none of them is repeated.

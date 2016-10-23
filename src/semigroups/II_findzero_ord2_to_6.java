@@ -1,5 +1,7 @@
 package semigroups;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 public class II_findzero_ord2_to_6 {
 
 	/**

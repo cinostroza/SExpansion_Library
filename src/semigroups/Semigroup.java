@@ -1,7 +1,9 @@
 package semigroups;
 
-import java.io.*;
-import java.util.Arrays;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.StringTokenizer;
 
 /**
@@ -287,116 +289,6 @@ public class Semigroup {
 	 * contains 835,927 of the 836,021 semigroups existing on that order.  
 	 */
 	
-	
-	private static Semigroup[] loadAllFile (int order ) {
-		System.out.println("loading semigroups of order:");
-		System.out.println(order);
-		int N = 0 ;
-		int NSemigroups ;
-		int number,id;
-		BufferedReader theReader ;
-		String str ;
-		String strNumber;
-		StringTokenizer st ;
-		int [][] matrix ;
-		Semigroup [] result;
-		String fileName = null;
-		int elements = 0 ;
-		switch( order ) {
-		case 2 :
-			fileName = "src/semigroups/datos/sem.2" ;
-			elements = 4;
-			break;
-		case 3 :
-			fileName = "src/semigroups/datos/sem.3" ;
-			elements= 18;
-			break;
-		case 4 :
-			fileName = "src/semigroups/datos/sem.4" ;
-			elements= 126;
-			break;
-		case 5 :
-			fileName = "src/semigroups/datos/sem.5" ;
-			elements= 1160;
-			break;
-		case 6 :
-			fileName = "src/semigroups/datos/sem.6" ;
-			elements= 15973;
-			break;
-		case 7 :
-			fileName = "src/semigroups/datos/sem.7" ;
-			elements= 835927;
-			break;
-		}
-		result = new Semigroup[elements];
-
-		//System.out.println('Anem a tractar de carregar un arxiu');
-		File arxiu = new File( fileName );
-		try {
-			NSemigroups = elements ;
-			FileReader reader = new FileReader(arxiu);
-			theReader = new BufferedReader(reader);
-			for ( N = 0 ; N < NSemigroups ; ++N ){
-//				System.out.println(N);
-				matrix = new int[order][order];
-				// La primera l’nia que llig Žs el nœmero de semigrup i l'ordre
-				str = theReader.readLine();
-				st = new StringTokenizer(str);
-				strNumber = st.nextToken();
-				number = Integer.parseInt(strNumber);
-				id = number ;
-				//System.out.println(numero);
-				strNumber = st.nextToken();
-				number = Integer.parseInt(strNumber);
-				//System.out.println(numero);
-				int i  , j  ;
-				for ( i = 0 ; i < order ; ++ i ){ 
-					for ( j = 0 ; j < order ; ++j ) {
-						str = theReader.readLine();
-						st = new StringTokenizer(str);
-						strNumber = st.nextToken();
-						number = Integer.parseInt(strNumber);
-						//System.out.println(numero) ;
-						matrix[i][j] = number;
-					}
-				}
-				result[N] = new Semigroup(matrix) ;
-				result[N].ID = id ;
-			}
-			System.out.println("End of File");
-			reader.close();
-			} catch( IOException excepcio  ) {
-				System.out.println("Error");
-			}
-		return result;
-	}
-	
-	/**
-	 * Load all the avaliable semigroups from order 2 to 7 using the method "loadAllFile". 
-	 */
-	
-	public static Semigroup[] loadAllFromFile( ) {
-		
-		Semigroup [] result;
-		Semigroup [] aux ;
-		int i = 0 , j = 0 ;
-		int alreadySaved = 0 ;
-		result = new Semigroup[4+18+126+1160+15973+835927];
-		int[] elements = {4,18,126,1160,15973,835927};
-	
-		for ( i = 2 ; i <= 7 ; ++i) {
-			aux = loadAllFile(i) ;
-			for ( j = 0 ; j < elements[i - 2] ; ++j) {
-				result[alreadySaved + j] = aux[j];
-			}
-			alreadySaved += elements[i-2];
-		}
-		return result;
-	}
-	
-	
-	
-	
 	/**
 	 * Checks if a given decomposition of a semigroup is a resonant one
 	 * @param s0
@@ -668,113 +560,7 @@ public class Semigroup {
 	 * We get a matrix with some empty spaces (given by -1 in the entry) and check if we can fill it with B
 	 * @param B a semigroup which we want to check if can fill the template
 	 * @return true if B fills the template
-	 */
-	
-	public boolean isTemplateFor( Semigroup B) {
-		int i , j ;
-		if ( this.order != B.order ) {
-			return false ;
-		}
-		else {
-			for ( i = 0 ; i < this.order ; ++ i) {
-				for ( j = 0 ; j < this.order ; ++j) {
-					if ( this.data[i][j]!= -1) {
-						if ( this.data[i][j] != B.data[i][j]) {
-							return false;
-						}
-					}
-				}
-			}
-		}
-		return true;
-	}
-	
-	/**
-	 * Checks if the template, or one of its isomorphism, is a good template for B
-	 * @param B
-	 * @return true in positive case
-	 */
-	
-	public boolean isIsoTemplateFor( Semigroup B) {
-		Semigroup [] isos = this.Permute() ;
-		Semigroup [] antis = this.AntiPermute() ;
-		int i ;
-		for ( i = 0 ; i < isos.length  ; ++i) {
-			if ( isos[i].isTemplateFor(B)) {
-				System.out.println("Isormorphism");
-				return true;
-			}
-		}
-		for ( i = 0 ; i < antis.length  ; ++i){
-			if ( antis[i].isTemplateFor(B)) {
-				System.out.println("Antiisormorphism");
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	/**
-	 * Fills a template, which is given as a semigroup object with some empty spaces (given by -1 in the entry)
-	 * @param s 
-	 * @return A list of all the tables that fill the template in a commutative way. However, they are not all necessarily associative.  
-	 */
-		public static Semigroup [] fillTemplate( Semigroup s) {
-		
-		int i , j = 0 , k, N = 0 , l;
-		Semigroup [] resultat = null ;
-		Semigroup [] resultatParcial = null;
-		Semigroup [] aux;
-		//Before doing anything, copy the content of the array
-		int [][] matriu = new int[s.order][s.order];
-		boolean buscar = true ;
-		for ( i = 0 ; i < s.order ; ++i) {
-			for ( j = 0 ; j < s.order ; ++j ) {
-				matriu[i][j] = s.data[i][j];
-			}
-		}
-		//Now we look for an element that is not -1
-		i = 0 ;
-		while ( buscar && i < s.order) {
-			j = i ;
-			while ( buscar && j < s.order ) {
-				if ( matriu[i][j] == -1 ) {
-					buscar = false ;
-				}
-				else {
-					j = j + 1 ;
-				}
-			}
-			if ( buscar ) {
-				i = i + 1 ;
-			}
-		}
-		//If "buscar" is true at this point it means that the matrix is complete and we simply have to return to it 
-		if ( buscar ) {
-			resultat =  new Semigroup[1];
-			resultat[0] = new Semigroup(matriu) ;
-		}
-		else {
-			for ( k = 1 ; k <= s.order ; ++k ){
-				matriu[i ][j] = k ;
-				matriu[j][i] = k ;
-				//System.out.println("we try with this matrix ") ;
-				//(new Semigroup(matriu)).show();
-				resultatParcial = fillTemplate( new Semigroup(matriu));
-				aux = resultat ;
-				resultat = new Semigroup[N + resultatParcial.length] ;
-				for ( l = 0 ; l < N ; ++l ) {
-					resultat[l] = aux[l];
-				}
-				for ( l = 0 ; l < resultatParcial.length ; ++l) {
-					resultat[N + l ] = resultatParcial[l];
-				}
-				N = N + resultatParcial.length ;
-			}
-		}
-		return resultat ;
-	}
-	
+	 */	
 	
 	/**
 	 * Builds a selector for the semigroup

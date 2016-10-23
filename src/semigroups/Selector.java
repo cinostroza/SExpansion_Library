@@ -23,7 +23,7 @@ public class Selector {
 	 */
 	public Selector ( int n ) {
 		order = n ;
-		data = new int[n][n][n] ;
+		data = new int[n][n][n];
 	}
 	/**
 	 * Sets the value of the K_{ab}^c component of the selector to valor

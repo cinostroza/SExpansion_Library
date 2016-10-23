@@ -1,6 +1,6 @@
 package semigroups;
 
-import Jama.* ;
+import Jama.Matrix;
 
 /**
  * Class to represent a Lie algebra, by mean of its structure constants.
