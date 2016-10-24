@@ -126,6 +126,7 @@ public class SetS {
         		strNumber = st.nextToken();
         		array[i] = Integer.parseInt(strNumber);
     		}
+        	theReader.close();
         	return new SetS(array);
     	} catch ( IOException e) {
     		System.out.println("Error");

@@ -180,6 +180,7 @@ public class Semigroup {
 			}
 			group = new Semigroup(matrix);
 			group.order = order;
+			theReader.close();
 		} catch (IOException e) {
 			System.out.println("Error");
 		}
