@@ -15,7 +15,7 @@ public class I_isomorphisms_SE_N {
 		int [][] mSE2 = {{1,2,3,4},{2,3,4,4},{3,4,4,4},{4,4,4,4}};
 		int [][] mSE3 = {{1,2,3,4,5},{2,3,4,5,5},{3,4,5,5,5},{4,5,5,5,5},{5,5,5,5,5}};
 		int [][] mSE4 = {{1,2,3,4,5,6},{2,3,4,5,6,6},{3,4,5,6,6,6},{4,5,6,6,6,6},{6,6,6,6,6,6}};
-		int [][] mSE5 = {{1,2,3,4,5,6,7},{2,3,4,5,6,7,7},{3,4,5,6,7,7,7},{4,5,6,7,7,7,7},{5,6,7,7,7,7,7},{6,7,7,7,7,7,7},{7,7,7,7,7,7,7}};
+//		int [][] mSE5 = {{1,2,3,4,5,6,7},{2,3,4,5,6,7,7},{3,4,5,6,7,7,7},{4,5,6,7,7,7,7},{5,6,7,7,7,7,7},{6,7,7,7,7,7,7},{7,7,7,7,7,7,7}};
 		
 		
 		Semigroup SE0 = new Semigroup(mSE0);
@@ -23,7 +23,7 @@ public class I_isomorphisms_SE_N {
 		Semigroup SE2 = new Semigroup(mSE2);
 		Semigroup SE3 = new Semigroup(mSE3);
 		Semigroup SE4 = new Semigroup(mSE4);
-		Semigroup SE5 = new Semigroup(mSE5) ;
+//		Semigroup SE5 = new Semigroup(mSE5) ;
 
 		
 		Semigroup [] permutations_SE0 ;
